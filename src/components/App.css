@@ -1,0 +1,45 @@
+.pantallaPrincipal{
+    width: 170%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+.imagenHeader{
+    margin-bottom: 12%;
+}
+.tituloBanco{
+    text-align: center;
+}
+.opciones{
+    display: flex;
+    justify-content: space-between;
+}
+ion-icon{
+    color: #F2BF27;
+    font-size: 70px;
+}
+.opcion{
+    display: flex;
+    flex-direction: row;
+    cursor: pointer;
+}
+/*CSS del input insertar Numeros*/
+.inputSection{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+.titulo{
+    font-size: 35px;
+}
+.Input{
+    height: 25px;
+    width: 20%;
+    border: 2px solid #5ED7F2;
+    border-radius: 20px;
+}
+.Input:focus {
+  outline: none;
+  box-shadow: 0 0 50px rgba(0, 123, 255, 0.5);
+}
