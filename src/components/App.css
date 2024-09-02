@@ -43,3 +43,25 @@ ion-icon{
   outline: none;
   box-shadow: 0 0 50px rgba(0, 123, 255, 0.5);
 }
+/*CSS del input insertar Numeros*/
+.dineroOpciones{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    position: relative;
+    bottom: 30px;
+}
+.valor>ion-icon{
+    color: #5ED7F2;
+}
+.valor>h5{
+    font-size: 15px;
+}
+.principalDinero{
+    width: 254%;
+}
+.headerDinero>h1{
+    text-align: center;
+    position: relative;
+    bottom: 70px;
+}

@@ -1,17 +1,29 @@
 import { useNavigate } from 'react-router-dom'
+import { useRef } from 'react'
 import HeaderImage from '../assets/trazoTabs.svg'
-import {Redireccionar} from '../func/FuncionesDeEnrutamientos'
+import {Redireccionar,ConstruirCuenta} from '../func/FuncionesDeEnrutamientos'
 import './App.css'
 
-function InsertarNumero({titulo}) {
+function InsertarNumero({titulo,peticion,url}) {
   const  navigate=useNavigate()
+  const inputRef=useRef()
+  const seguirTransaccion = async ()=>{
+      const numeroTarjeta = inputRef.current.value;
+      localStorage.setItem('cuenta',ConstruirCuenta(numeroTarjeta))
+      const respuesta = await peticion(numeroTarjeta, url);
+      if(respuesta=='Puede Continuar'){
+        Redireccionar('/escogerDinero', navigate)
+      }else{
+        alert(respuesta)
+      }
+  }
   return (
     <div className='pantallaPrincipal'>
       <div className='imagenHeader'>
         <img src={HeaderImage} alt="" />
         <section className='inputSection'>
             <h2 className='titulo'>{titulo}</h2>
-            <input type="text" className='Input'/>
+            <input type="text" className='Input' ref={inputRef}/>
         </section>
       </div>
       <div className='opciones'>
@@ -20,7 +32,7 @@ function InsertarNumero({titulo}) {
             <h5 onClick={()=>{Redireccionar('/', navigate);}}>Cancelar</h5>
           </span>
           <span className='opcion'>
-            <h5>Seguir</h5>
+            <h5 onClick={seguirTransaccion}>Seguir</h5>
             <ion-icon name="caret-back-outline"></ion-icon>
           </span>
       </div>
