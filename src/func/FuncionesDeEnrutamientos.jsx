@@ -3,7 +3,7 @@ export const Redireccionar = (path, navigate) => {
 };
 
 export const ConstruirUrl = (numeroCuenta,url)=>{
-    if(numeroCuenta.startsWith("0")){
+    if(numeroCuenta.startsWith("0") || numeroCuenta.length==6){
         return `http://localhost:8080/retiroNequi/${url}`
     }else{
         return `http://localhost:8080/retiroTarjeta/${url}`
@@ -16,7 +16,17 @@ export const ConstruirCuenta = (numeroCuenta) =>{
     }
     return numeroCuenta
 }
-export const GenerarCadenaDeNumeros = () => {
+export const GenerarTitulo = () => {
     let numeroAleatorio = Math.floor(100000 + Math.random() * 900000);
-    return numeroAleatorio.toString();
+    if(localStorage.getItem('TipoCuenta')=='0'){
+        return `Digite este codigo: ${numeroAleatorio}`
+    }
+    return 'Ingrese su clave'
+}
+
+export const ConvertirCuenta = () =>{
+    if(localStorage.getItem('TipoCuenta')=='0'){
+        return "Nequi"
+    }
+    return "Tarjeta Debito"
 }

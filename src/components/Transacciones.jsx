@@ -1,37 +1,46 @@
 import { useNavigate } from 'react-router-dom'
-import { useRef, useEffect } from 'react'
+import { useRef, useEffect, useState } from 'react'
 import HeaderImage from '../assets/trazoTabs.svg'
-import {Redireccionar,ConstruirUrl,GenerarCadenaDeNumeros} from '../func/FuncionesDeEnrutamientos'
+import {Redireccionar,ConstruirUrl} from '../func/FuncionesDeEnrutamientos'
 import React from 'react'
 
 function Transacciones({titulo,peticion,url,mensajeConfirmacion,urlRedireccion}) {
+    const [tituloState, setTituloState] = useState('')
     const  navigate=useNavigate()
     const inputRef=useRef()
-    const seguirTransaccion = async ()=>{
-        const numeroTarjeta = localStorage.getItem('cuenta'); const valor= inputRef.current.value
-        const urlConstruida= ConstruirUrl(numeroTarjeta,url)
-        const respuesta = await peticion(numeroTarjeta,valor,urlConstruida);
-        if(respuesta==mensajeConfirmacion){
-          Redireccionar(urlRedireccion,navigate)
-        }else{
-          alert(respuesta)
-        }
+    const elegirNumeroDeTarjeta = () => {
+      if(titulo=='Ingrese el valor a retirar, mayor que 10.000'){
+          return localStorage.getItem('cuenta');
+      }
+      if(localStorage.getItem('TipoCuenta')=='0'){
+        const numStr = titulo.split(' ').pop();
+        return numStr;
+      }
+      return localStorage.getItem('cuenta');
     }
-    const cargar = ()=>{
-      if(localStorage.getItem('TipoCuenta')==0){
-        alert(GenerarCadenaDeNumeros())
+    const numeroTarjeta=elegirNumeroDeTarjeta(); 
+    const seguirTransaccion = async ()=>{
+      const valor= inputRef.current.value
+      if(titulo=='Ingrese el valor a retirar, mayor que 10.000'){
+          localStorage.setItem('Monto',valor)
+      }
+      const urlConstruida= ConstruirUrl(numeroTarjeta,url)
+      const respuesta = await peticion(numeroTarjeta,valor,urlConstruida);
+      if(respuesta==mensajeConfirmacion){
+        Redireccionar(urlRedireccion,navigate)
+      }else{
+        alert(respuesta)
       }
     }
-    
     useEffect(()=>{
-      cargar()
-    })
+      setTituloState(titulo)
+    },[titulo]) 
   return (
     <div className='pantallaPrincipal'>
       <div className='imagenHeader'>
         <img src={HeaderImage} alt="" />
         <section className='inputSection'>
-            <h2 className='titulo'>{titulo}</h2>
+            <h2 className='titulo'>{tituloState}</h2>
             <input type="text" className='Input' ref={inputRef}/>
         </section>
       </div>

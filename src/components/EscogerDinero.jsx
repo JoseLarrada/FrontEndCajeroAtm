@@ -8,6 +8,7 @@ function EscogerDinero() {
         const valorSeleccionado = event.target.innerText;
         const numeroTarjeta = localStorage.getItem('cuenta');
         const urlConstruida= ConstruirUrl(numeroTarjeta,'validarMonto')
+        localStorage.setItem('Monto',valorSeleccionado)
         const respuesta = await PeticionPostCajero(numeroTarjeta,valorSeleccionado,urlConstruida);
         if(respuesta=='Puede Continuar'){
             Redireccionar('/validarCodigo',navigate)

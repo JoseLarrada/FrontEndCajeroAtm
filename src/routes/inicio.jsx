@@ -4,8 +4,11 @@ import App from '../components/App'
 import InsertarNumero from '../components/InsertarNumero'
 import EscogerDinero from '../components/EscogerDinero'
 import Transacciones from '../components/Transacciones'
+import Reporte from '../components/Reporte'
 import {PeticionCajero,PeticionPostCajero} from '../func/FuncionesDePeticiones'
+import {GenerarTitulo} from '../func/FuncionesDeEnrutamientos'
 function inicio() {
+  const texto=GenerarTitulo()
   return (
     <BrowserRouter>
         <Routes>
@@ -14,10 +17,10 @@ function inicio() {
             <Route path='/ingresarCuentaDebito' element={<InsertarNumero titulo={"Inserte el numero de su tarjeta"} peticion={PeticionCajero} url={'http://localhost:8080/retiroTarjeta/'}/>}/>
             <Route path='/ingresarValorRetirar' element={<Transacciones titulo={"Ingrese el valor a retirar, mayor que 10.000"}  peticion={PeticionPostCajero} 
               url={'validarMonto'} mensajeConfirmacion={'Puede Continuar'} urlRedireccion={'/validarCodigo'}/>}/>
-            <Route path='/validarCodigo' element={<Transacciones titulo={"Ingresa tu clave"} peticion={PeticionPostCajero} url={'validarClave'} 
+            <Route path='/validarCodigo' element={<Transacciones titulo={texto} peticion={PeticionPostCajero} url={'validarClave'} 
             mensajeConfirmacion={'Puede Continuar'} urlRedireccion={'/reciboPago'}/>}/>
             <Route path='/escogerDinero' element={<EscogerDinero/>}/>
-            <Route path='/reciboPago' element={<InsertarNumero/>}/>
+            <Route path='/reciboPago' element={<Reporte/>}/>
         </Routes>
     </BrowserRouter>
   )
