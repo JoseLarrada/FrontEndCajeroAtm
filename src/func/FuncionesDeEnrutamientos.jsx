@@ -30,3 +30,9 @@ export const ConvertirCuenta = () =>{
     }
     return "Tarjeta Debito"
 }
+
+export const ContadorTiempo=()=>{
+    setTimeout(function() {
+        alert("Han pasado 30 segundos desde que el input obtuvo el foco.");
+    }, 30000);
+}
